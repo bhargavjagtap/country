@@ -1,0 +1,47 @@
+concepts covered:
+
+Hooks:
+useState, useEffect
+
+fetch API for calling the api
+structure:
+ useEffect(() => {
+    const req_headers = new Headers();
+    const api_key = "SOybOI0gySWleBOkbrns9RdA1XvKHjs1rlgrFrep";
+    req_headers.append("Authorization",`Bearer ${api_key}`);
+    req_headers.append("Accept","application/json");
+
+    const req_options = {
+      method: "GET",
+      headers: req_headers
+    };
+
+    fetch("https://countryapi.io/api/all", req_options)
+    .then(response => response.json())
+    .then(data => {
+      setItems(data)
+      setLoaded(true)
+    },
+    (error) => {
+      setError(error)
+      setLoaded(true)
+    }
+    );
+  }, []);
+
+Search, filter and paginations are// Filter
+  // Filter
+  const filter_items = [...new Set(data.map((item) => item.region))];
+
+  // search function
+  function search(items) {
+    return items.filter((item) => 
+      item.region.includes(filter) && 
+      item.name.toLowerCase().includes(query)
+    )
+  }
+
+  // paginate function
+  const load_more = (event) => {
+    setPaginate((prevValue) => prevValue + 8);
+  };
